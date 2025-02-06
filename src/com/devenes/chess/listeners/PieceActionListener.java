@@ -1,6 +1,7 @@
 package com.devenes.chess.listeners;
 
 import com.devenes.chess.core.Core;
+import com.devenes.chess.core.Game;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -9,11 +10,11 @@ import java.util.ArrayList;
 public class PieceActionListener implements ActionListener {
 
     Object object;
-    Core core;
 
-    public PieceActionListener(Core core, Object object) {
+
+    public PieceActionListener(Object object) {
         this.object = object;
-        this.core = core;
+
     }
 
     @Override
@@ -39,7 +40,7 @@ public class PieceActionListener implements ActionListener {
         } else {
             Core.targetPiece = Core.pieces.get(index);
             try {
-                core.makeMove();
+                new Game().makeMove();
             } catch (Exception ex) {
                 throw new RuntimeException(ex);
             }

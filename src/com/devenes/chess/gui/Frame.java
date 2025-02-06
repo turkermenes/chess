@@ -14,7 +14,6 @@ public class Frame extends JFrame {
     //core'u silme :D
     Core core = new Core(this, gameBoard);
 
-
     public Frame() {
         super("Chess");
         setSize(frameWidth, frameHeight);

@@ -1,6 +1,7 @@
 package com.devenes.chess.listeners;
 
 import com.devenes.chess.Converter;
+import com.devenes.chess.core.Game;
 
 import java.awt.event.MouseEvent;
 
@@ -18,9 +19,8 @@ public class MouseListener implements java.awt.event.MouseListener {
         if (selectedPiece != null) {
             targetSquare = Converter.xToColumn(e.getY()) + "," + Converter.yToRow(e.getX());
             if (possibleMoves.contains(targetSquare)) {
-                Object selectedP = selectedPiece;
                 try {
-                    selectedP.getClass().getMethod("makeMove").invoke(selectedP);
+                    new Game().makeMove();
                 } catch (Exception ex) {
                     throw new RuntimeException(ex);
                 }
