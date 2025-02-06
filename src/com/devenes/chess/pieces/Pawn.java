@@ -20,7 +20,7 @@ public class Pawn extends JButton implements Piece {
     public int x;
     public int y;
     public int row, column, index;
-    boolean firstMove = true;
+    public boolean firstMove = true;
     public Core core;
 
     public Pawn(Core core, String color, int x, int y) {

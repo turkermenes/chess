@@ -36,6 +36,7 @@ public class PieceActionListener implements ActionListener {
                     throw new RuntimeException(ex);
                 }
                 Core.selectedPiece = Core.pieces.get(index);
+                System.out.println(Core.selectedPiece);
             }
         } else {
             Core.targetPiece = Core.pieces.get(index);

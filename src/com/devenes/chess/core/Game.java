@@ -5,6 +5,7 @@ import com.devenes.chess.Converter;
 import com.devenes.chess.pieces.*;
 
 import java.lang.reflect.InvocationTargetException;
+import java.util.Arrays;
 import java.util.Map;
 
 public class Game {
@@ -19,6 +20,7 @@ public class Game {
                 King.class, 1
         );
 
+//        System.out.println("selected piece: " + Core.selectedPiece + ", target piece:" + Core.targetPiece + ", target square: " + Core.targetSquare);
         if (Core.selectedPiece != null && Core.targetSquare != null) {
             // Move to an empty square
             Object selectedP = Core.selectedPiece;
@@ -39,6 +41,8 @@ public class Game {
             int baseValue = pieceValues.getOrDefault(selectedP.getClass(), 0);
             String color = (String) selectedP.getClass().getField("color").get(selectedP);
             Core.board[row][column] = color.equals("white") ? baseValue : baseValue + 6;
+            if (selectedP instanceof Pawn pawn)
+                pawn.firstMove = false;
 
         } else if (Core.selectedPiece != null && Core.targetPiece != null) {
             // Taking a piece
@@ -72,6 +76,18 @@ public class Game {
         Core.turn = Core.turn == 1 ? 2 : 1;
         if (core != null)
             core.updateBoard();
+
+//        for (Object o : Core.pieces) {
+//            System.out.print(o.toString() + " | ");
+//        }
+//        System.out.println();
+//        for (int i = 0; i < 8; i++) {
+//            for (int j = 0; j < 8; j++) {
+//                System.out.print("(" + i + "," + j + ") -> " + Core.board[i][j] + " |");
+//            }
+//        }
+//        System.out.println();
+
     }
 
 }
