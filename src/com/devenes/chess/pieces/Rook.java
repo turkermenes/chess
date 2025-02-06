@@ -13,11 +13,9 @@ import java.util.ArrayList;
 import java.util.Map;
 import java.util.Objects;
 
-public class Rook extends JButton implements Piece {
+public class Rook extends JButton {
     public String color;
-    public int x;
-    public int y;
-    public int row, column, index;
+    public int x, y, row, column;
 //    boolean played = false;
     public Core core;
 

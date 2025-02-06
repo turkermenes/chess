@@ -6,20 +6,14 @@ import com.devenes.chess.listeners.PieceActionListener;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
-import java.util.Map;
 import java.util.Objects;
 
-public class Pawn extends JButton implements Piece {
+public class Pawn extends JButton {
     //en passant, promote
 
     public String color;
-    public int x;
-    public int y;
-    public int row, column, index;
+    public int x, y, row, column;
     public boolean firstMove = true;
     public Core core;
 
@@ -82,6 +76,8 @@ public class Pawn extends JButton implements Piece {
                     result.add(s);
                 }
             }
+
+            //en passant -> last move gibi bir değişken hangi taş ve konum bilgisi. eğer karşı renk piyonsa ve uygun kareler müsaitse.
 
 
         } else {

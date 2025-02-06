@@ -13,13 +13,10 @@ import java.util.ArrayList;
 import java.util.Map;
 import java.util.Objects;
 
-public class Queen extends JButton implements Piece {
+public class Queen extends JButton {
 
     public String color;
-    public int x;
-    public int y;
-
-    public int row, column, index;
+    public int x, y, row, column;
     public Core core;
     public Queen(Core core, String color, int x, int y) {
         this.color = color;

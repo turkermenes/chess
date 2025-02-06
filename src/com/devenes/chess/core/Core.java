@@ -80,7 +80,6 @@ public class Core {
                             king.row = i;
                             king.column = j;
                             pieces.add(king);
-                            king.index = pieces.indexOf(king);
                             break;
                         case 2:
                         case 8:
@@ -89,7 +88,6 @@ public class Core {
                             queen.row = i;
                             queen.column = j;
                             pieces.add(queen);
-                            queen.index = pieces.indexOf(queen);
                             break;
                         case 3:
                         case 9:
@@ -98,7 +96,6 @@ public class Core {
                             rook.row = i;
                             rook.column = j;
                             pieces.add(rook);
-                            rook.index = pieces.indexOf(rook);
                             break;
                         case 4:
                         case 10:
@@ -107,7 +104,6 @@ public class Core {
                             knight.row = i;
                             knight.column = j;
                             pieces.add(knight);
-                            knight.index = pieces.indexOf(knight);
                             break;
                         case 5:
                         case 11:
@@ -116,7 +112,6 @@ public class Core {
                             bishop.row = i;
                             bishop.column = j;
                             pieces.add(bishop);
-                            bishop.index = pieces.indexOf(bishop);
                             break;
                         case 6:
                         case 12:
@@ -125,7 +120,6 @@ public class Core {
                             pawn.row = i;
                             pawn.column = j;
                             pieces.add(pawn);
-                            pawn.index = pieces.indexOf(pawn);
                             break;
                     }
                 }

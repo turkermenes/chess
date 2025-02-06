@@ -5,7 +5,6 @@ import com.devenes.chess.Converter;
 import com.devenes.chess.pieces.*;
 
 import java.lang.reflect.InvocationTargetException;
-import java.util.Arrays;
 import java.util.Map;
 
 public class Game {
@@ -46,6 +45,7 @@ public class Game {
 
         } else if (Core.selectedPiece != null && Core.targetPiece != null) {
             // Taking a piece
+            // taş yemeye başlayınca buglar ortaya çıkıyor.
             Object targetP = Core.targetPiece;
             int targetX = (int) targetP.getClass().getField("x").get(targetP);
             int targetY = (int) targetP.getClass().getField("y").get(targetP);

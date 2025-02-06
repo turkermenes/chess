@@ -6,18 +6,14 @@ import com.devenes.chess.listeners.PieceActionListener;
 
 import javax.swing.*;
 import java.awt.*;
-import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
-import java.util.Map;
 import java.util.Objects;
 
-public class King extends JButton implements Piece {
+public class King extends JButton {
 
     //50 move rule
     public String color;
-    public int x;
-    public int y;
-    public int row, column, index;
+    public int x, y, row, column;
     boolean played = false;
     public Core core;
 

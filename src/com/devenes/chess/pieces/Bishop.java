@@ -6,16 +6,12 @@ import com.devenes.chess.listeners.PieceActionListener;
 
 import javax.swing.*;
 import java.awt.*;
-import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
-import java.util.Map;
 import java.util.Objects;
 
-public class Bishop extends JButton implements Piece {
+public class Bishop extends JButton {
     public String color;
-    public int x;
-    public int y;
-    public int row, column, index;
+    public int x, y, row, column;
     public Core core;
 
     public Bishop(Core core, String color, int x, int y) {
@@ -106,7 +102,6 @@ public class Bishop extends JButton implements Piece {
                 if (val != 0) break;
             } else break;
         }
-        System.out.println(result);
         return result;
     }
 

@@ -13,12 +13,10 @@ import java.util.ArrayList;
 import java.util.Map;
 import java.util.Objects;
 
-public class Knight extends JButton implements Piece {
+public class Knight extends JButton {
 
     public String color;
-    public int x;
-    public int y;
-    public int row, column, index;
+    public int x, y, row, column;
     public Core core;
 
     public Knight(Core core, String color, int x, int y) {
@@ -55,7 +53,6 @@ public class Knight extends JButton implements Piece {
         int knight = color.equals("white") ? 4 : 10;
         int rook = color.equals("white") ? 3 : 9;
         int queen = color.equals("white") ? 2 : 8;
-        // square objesi gibi bir şey ile board oluşturarak square objesinde o karedeki taşın rengi ve tipi olsun. Aynı renk mi diye kolayca kontrol edilir.
         if (row + 1 < 8 && column - 2 >= 0) {
             int val = Core.board[row + 1][column - 2];
             if (val != 1 && val != 7 && val != pawn && val != bishop && val != knight && val != rook && val != queen){

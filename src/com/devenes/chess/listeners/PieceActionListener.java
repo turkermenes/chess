@@ -14,7 +14,6 @@ public class PieceActionListener implements ActionListener {
 
     public PieceActionListener(Object object) {
         this.object = object;
-
     }
 
     @Override
@@ -23,7 +22,7 @@ public class PieceActionListener implements ActionListener {
         int index;
         try {
             color = (String) object.getClass().getField("color").get(object);
-            index = (int) object.getClass().getField("index").get(object);
+            index = Core.pieces.indexOf(object);
         } catch (Exception ex) {
             throw new RuntimeException(ex);
         }
