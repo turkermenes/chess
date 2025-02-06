@@ -73,6 +73,7 @@ public class Game {
         Core.selectedPiece = null;
         Core.targetSquare = null;
         Core.targetPiece = null;
+        Core.possibleMoves = null;
         Core.turn = Core.turn == 1 ? 2 : 1;
         if (core != null)
             core.updateBoard();

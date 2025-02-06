@@ -1,11 +1,14 @@
 package com.devenes.chess.listeners;
 
+import com.devenes.chess.Converter;
 import com.devenes.chess.core.Core;
 import com.devenes.chess.core.Game;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
+
+import static com.devenes.chess.core.Core.*;
 
 public class PieceActionListener implements ActionListener {
 
@@ -39,11 +42,34 @@ public class PieceActionListener implements ActionListener {
             }
         } else {
             Core.targetPiece = Core.pieces.get(index);
+            if (selectedPiece.equals(targetPiece)) {
+                Core.selectedPiece = null;
+                Core.targetSquare = null;
+                Core.targetPiece = null;
+                Core.possibleMoves = null;
+                return;
+            }
+            int targetX, targetY;
             try {
-                new Game().makeMove();
+                targetX = (int) Core.targetPiece.getClass().getField("x").get(Core.targetPiece);
+                targetY = (int) Core.targetPiece.getClass().getField("y").get(Core.targetPiece);
             } catch (Exception ex) {
                 throw new RuntimeException(ex);
             }
+
+            // x ve y'nin yerleri niye ters?
+            String targetSquare = Converter.xToColumn(targetY) + "," + Converter.yToRow(targetX);
+            System.out.println(targetSquare);
+            if (Core.possibleMoves.contains(targetSquare)) {
+                System.out.println(possibleMoves);
+                try {
+                    new Game().makeMove();
+                } catch (Exception ex) {
+                    throw new RuntimeException(ex);
+                }
+            }
+
+
         }
 
     }
