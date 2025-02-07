@@ -14,7 +14,7 @@ public class King extends JButton {
     //50 move rule
     public String color;
     public int x, y, row, column;
-    boolean played = false;
+    public boolean played = false;
     public Core core;
 
     public King(Core core, String color, int x, int y) {
@@ -124,6 +124,49 @@ public class King extends JButton {
                 String s = (row + 1) + "," + (column - 1);
                 result.add(s);
             }
+        }
+
+        //short-castle
+        if (!played) {
+            if (Core.board[row][column + 3] == rook && Core.board[row][column + 1] == 0 && Core.board[row][column + 2] == 0) {
+                boolean canShortCastle = false;
+                for (Object o : Core.pieces) {
+                    if (o instanceof Rook r) {
+                        if (r.row == row && r.column == column + 3 && !r.played) {
+                            canShortCastle = true;
+                            break;
+                        }
+                    }
+                }
+                if (canShortCastle) {
+                    String s = (row) + "," + (column + 2);
+                    System.out.println("kısa rok :)");
+                    result.add(s);
+                }
+            }
+
+        }
+
+        //long-castle
+        if (!played) {
+            if (Core.board[row][column - 4] == rook && Core.board[row][column - 1] == 0 && Core.board[row][column - 2] == 0 &&
+                    Core.board[row][column - 3] == 0) {
+                boolean canLongCastle = false;
+                for (Object o : Core.pieces) {
+                    if (o instanceof Rook r) {
+                        if (r.row == row && r.column == column - 4 && !r.played) {
+                            canLongCastle = true;
+                            break;
+                        }
+                    }
+                }
+                if (canLongCastle) {
+                    String s = (row) + "," + (column - 2);
+                    System.out.println("uzun rok :)");
+                    result.add(s);
+                }
+            }
+
         }
 
         return result;

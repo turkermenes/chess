@@ -19,7 +19,6 @@ public class Game {
                 King.class, 1
         );
 
-//        System.out.println("selected piece: " + Core.selectedPiece + ", target piece:" + Core.targetPiece + ", target square: " + Core.targetSquare);
         if (Core.selectedPiece != null && Core.targetSquare != null) {
             // Move to an empty square
             Object selectedP = Core.selectedPiece;
@@ -29,6 +28,37 @@ public class Game {
             String[] split = Core.targetSquare.split(",");
             int x = Converter.columnToX(Integer.parseInt(split[1]));
             int y = Converter.rowToY(Integer.parseInt(split[0]));
+
+            //castle
+            if (selectedP instanceof King king) {
+                //make short castle
+                if (king.column + 2 == Integer.parseInt(split[1])) {
+                    for (Object o : Core.pieces) {
+                        if (o instanceof Rook rook && rook.color.equals(king.color) && rook.row == king.row && rook.column == king.column + 3) {
+                            //x, y, setLocation, row, column değiş
+                            rook.x = Converter.columnToX(king.column + 1);
+                            rook.setLocation(rook.x, rook.y);
+                            rook.column = king.column + 1;
+                            king.played = true;
+                            rook.played = true;
+                            break;
+                        }
+                    }
+                } else if (king.column - 2 == Integer.parseInt(split[1])) {
+                    for (Object o : Core.pieces) {
+                        if (o instanceof Rook rook && rook.color.equals(king.color) && rook.row == king.row && rook.column == king.column - 4) {
+                            //x, y, setLocation, row, column değiş
+                            rook.x = Converter.columnToX(king.column - 1);
+                            rook.setLocation(rook.x, rook.y);
+                            rook.column = king.column - 1;
+                            king.played = true;
+                            rook.played = true;
+                            break;
+                        }
+                    }
+                }
+            }
+
             selectedP.getClass().getField("x").set(selectedP, x);
             selectedP.getClass().getField("y").set(selectedP, y);
             selectedP.getClass().getMethod("setLocation", int.class, int.class).invoke(selectedP, x, y);
@@ -42,10 +72,12 @@ public class Game {
             Core.board[row][column] = color.equals("white") ? baseValue : baseValue + 6;
             if (selectedP instanceof Pawn pawn)
                 pawn.firstMove = false;
+            else if (selectedP instanceof Rook rook)
+                rook.played = true;
+
 
         } else if (Core.selectedPiece != null && Core.targetPiece != null) {
             // Taking a piece
-            // taş yemeye başlayınca buglar ortaya çıkıyor.
             Object targetP = Core.targetPiece;
             int targetX = (int) targetP.getClass().getField("x").get(targetP);
             int targetY = (int) targetP.getClass().getField("y").get(targetP);
@@ -78,16 +110,6 @@ public class Game {
         if (core != null)
             core.updateBoard();
 
-//        for (Object o : Core.pieces) {
-//            System.out.print(o.toString() + " | ");
-//        }
-//        System.out.println();
-//        for (int i = 0; i < 8; i++) {
-//            for (int j = 0; j < 8; j++) {
-//                System.out.print("(" + i + "," + j + ") -> " + Core.board[i][j] + " |");
-//            }
-//        }
-//        System.out.println();
 
     }
 

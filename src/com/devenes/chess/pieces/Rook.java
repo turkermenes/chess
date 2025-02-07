@@ -16,7 +16,7 @@ import java.util.Objects;
 public class Rook extends JButton {
     public String color;
     public int x, y, row, column;
-//    boolean played = false;
+    public boolean played = false;
     public Core core;
 
     public Rook(Core core, String color, int x, int y) {
