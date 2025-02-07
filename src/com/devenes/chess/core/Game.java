@@ -7,6 +7,8 @@ import com.devenes.chess.pieces.*;
 import java.lang.reflect.InvocationTargetException;
 import java.util.Map;
 
+import static com.devenes.chess.core.Core.selectedPiece;
+
 public class Game {
 
     public void makeMove() throws NoSuchFieldException, IllegalAccessException, NoSuchMethodException, InvocationTargetException {
@@ -102,6 +104,11 @@ public class Game {
         } else return;
 
         Core core = (Core) Core.selectedPiece.getClass().getField("core").get(Core.selectedPiece);
+        try {
+            Core.selectedPiece.getClass().getMethod("setContentAreaFilled", boolean.class).invoke(Core.selectedPiece, false);
+        } catch (Exception ex) {
+            throw new RuntimeException(ex);
+        }
         Core.selectedPiece = null;
         Core.targetSquare = null;
         Core.targetPiece = null;

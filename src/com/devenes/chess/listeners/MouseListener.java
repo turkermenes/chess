@@ -25,6 +25,11 @@ public class MouseListener implements java.awt.event.MouseListener {
                 }
 
             } else {
+                try {
+                    selectedPiece.getClass().getMethod("setContentAreaFilled", boolean.class).invoke(selectedPiece, false);
+                } catch (Exception ex) {
+                    throw new RuntimeException(ex);
+                }
                 selectedPiece = null;
                 targetSquare = null;
                 targetPiece = null;

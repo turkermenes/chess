@@ -140,7 +140,6 @@ public class King extends JButton {
                 }
                 if (canShortCastle) {
                     String s = (row) + "," + (column + 2);
-                    System.out.println("kısa rok :)");
                     result.add(s);
                 }
             }
@@ -162,7 +161,6 @@ public class King extends JButton {
                 }
                 if (canLongCastle) {
                     String s = (row) + "," + (column - 2);
-                    System.out.println("uzun rok :)");
                     result.add(s);
                 }
             }
