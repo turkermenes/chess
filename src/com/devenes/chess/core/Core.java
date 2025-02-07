@@ -9,14 +9,13 @@ import java.util.ArrayList;
 public class Core {
 
 //    boolean showPossibleMoves = false;
+public static ArrayList<String[]> moves = new ArrayList<>();
     public static ArrayList<Object> pieces = new ArrayList<>();
-    public static ArrayList<String[]> moves = new ArrayList<>();
     public static ArrayList<String> possibleMoves = new ArrayList<>();
     public static Object selectedPiece, targetPiece;
     public static int[][] board = new int[8][8];
     public static String targetSquare;
-    public static int size = 120;
-    public static int turn = 1;
+    public static int size = 120, turn = 1;
     JFrame frame;
     JPanel gamePanel;
 
@@ -135,6 +134,7 @@ public class Core {
         // White -> King: 1, Queen: 2, Rook: 3, Knight: 4, Bishop: 5, Pawn: 6
         // Black -> king: 7, Queen: 8, Rook: 9, Knight: 10, Bishop: 11, Pawn: 12
         gamePanel.removeAll();
+        //Hepsini silip tekrar eklemekten daha güzel bir yol var mı?
         for (Object o : pieces) {
             gamePanel.add((Component) o);
         }

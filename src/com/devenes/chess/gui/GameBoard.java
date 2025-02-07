@@ -10,7 +10,6 @@ import static com.devenes.chess.core.Core.*;
 
 public class GameBoard extends JPanel {
 
-    Core core;
     public GameBoard() {
 
         setSize(size * 8, size * 8);
@@ -24,10 +23,6 @@ public class GameBoard extends JPanel {
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
         drawBoard(g);
-    }
-
-    public void setCore(Core core) {
-        this.core = core;
     }
 
     private void drawBoard(Graphics g) {

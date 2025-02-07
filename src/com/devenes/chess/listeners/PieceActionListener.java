@@ -14,7 +14,6 @@ public class PieceActionListener implements ActionListener {
 
     Object object;
 
-
     public PieceActionListener(Object object) {
         this.object = object;
     }
@@ -68,8 +67,6 @@ public class PieceActionListener implements ActionListener {
                     throw new RuntimeException(ex);
                 }
             }
-
-
         }
 
     }

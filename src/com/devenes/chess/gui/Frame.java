@@ -11,7 +11,7 @@ public class Frame extends JFrame {
     public int frameHeight = Core.size * 8 + 100;
     JPanel gameBoard = new GameBoard();
 
-    //core'u silme :D
+    //core'u silme yapılandırıcı metot çalışıyor :)
     Core core = new Core(this, gameBoard);
 
     public Frame() {

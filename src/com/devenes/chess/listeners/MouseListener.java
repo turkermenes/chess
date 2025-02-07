@@ -11,7 +11,6 @@ import static com.devenes.chess.core.Core.targetSquare;
 public class MouseListener implements java.awt.event.MouseListener {
     @Override
     public void mouseClicked(MouseEvent e) {
-        //buradaydı mousePressed'e taşıdım xd
     }
 
     @Override
