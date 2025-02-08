@@ -31,37 +31,32 @@ public class Game {
             int x = Converter.columnToX(Integer.parseInt(split[1]));
             int y = Converter.rowToY(Integer.parseInt(split[0]));
 
-            //castle
+            //check castle
             if (selectedP instanceof King king) {
-                //make short castle
-                if (king.column + 2 == Integer.parseInt(split[1])) {
-                    for (Object o : Core.pieces) {
-                        if (o instanceof Rook rook && rook.color.equals(king.color) && rook.row == king.row && rook.column == king.column + 3) {
-                            //x, y, setLocation, row, column değiş
-                            rook.x = Converter.columnToX(king.column + 1);
-                            rook.setLocation(rook.x, rook.y);
-                            rook.column = king.column + 1;
-                            king.played = true;
-                            rook.played = true;
-                            break;
-                        }
-                    }
-                } else if (king.column - 2 == Integer.parseInt(split[1])) {
-                    for (Object o : Core.pieces) {
-                        if (o instanceof Rook rook && rook.color.equals(king.color) && rook.row == king.row && rook.column == king.column - 4) {
-                            //x, y, setLocation, row, column değiş
-                            rook.x = Converter.columnToX(king.column - 1);
-                            rook.setLocation(rook.x, rook.y);
-                            rook.column = king.column - 1;
-                            king.played = true;
-                            rook.played = true;
-                            break;
-                        }
-                    }
-                }
+                if (king.column + 2 == Integer.parseInt(split[1]))
+                    king.shortCastle();
+                else if (king.column - 2 == Integer.parseInt(split[1]))
+                    king.longCastle();
             }
 
-            selectedP.getClass().getField("x").set(selectedP, x);
+            if (selectedP instanceof Pawn pawn) {
+                //check pawn played two square
+                if (Math.abs(pawn.row - Integer.parseInt(split[0])) == 2)
+                    pawn.playedTwoSquare = true;
+
+                //check en passant
+                if (Math.abs(pawn.row - Integer.parseInt(split[0])) == 1 && Math.abs(pawn.column - Integer.parseInt(split[1])) == 1 &&
+                        Core.board[Integer.parseInt(split[0])][Integer.parseInt(split[1])] == 0) {
+                    pawn.enPassant();
+                    return;
+                }
+
+
+            }
+
+
+                selectedP.getClass().getField("x").set(selectedP, x);
+
             selectedP.getClass().getField("y").set(selectedP, y);
             selectedP.getClass().getMethod("setLocation", int.class, int.class).invoke(selectedP, x, y);
             selectedP.getClass().getField("row").set(selectedP, Converter.yToRow(y));
@@ -72,11 +67,6 @@ public class Game {
             int baseValue = pieceValues.getOrDefault(selectedP.getClass(), 0);
             String color = (String) selectedP.getClass().getField("color").get(selectedP);
             Core.board[row][column] = color.equals("white") ? baseValue : baseValue + 6;
-            if (selectedP instanceof Pawn pawn)
-                pawn.firstMove = false;
-            else if (selectedP instanceof Rook rook)
-                rook.played = true;
-
 
         } else if (Core.selectedPiece != null && Core.targetPiece != null) {
             // Taking a piece
@@ -101,6 +91,7 @@ public class Game {
             String color = (String) selectedP.getClass().getField("color").get(selectedP);
             Core.board[targetRow][targetColumn] = color.equals("white") ? baseValue : baseValue + 6;
 
+
         } else return;
 
         Core core = (Core) Core.selectedPiece.getClass().getField("core").get(Core.selectedPiece);
@@ -109,14 +100,21 @@ public class Game {
         } catch (Exception ex) {
             throw new RuntimeException(ex);
         }
+        if (selectedPiece instanceof Pawn pawn)
+            pawn.firstMove = false;
+        else if (selectedPiece instanceof Rook rook)
+            rook.played = true;
+        else if (selectedPiece instanceof King king)
+            king.played = true;
+        Core.lastPlayedPiece = selectedPiece;
         Core.selectedPiece = null;
         Core.targetSquare = null;
         Core.targetPiece = null;
         Core.possibleMoves = null;
         Core.turn = Core.turn == 1 ? 2 : 1;
+
         if (core != null)
             core.updateBoard();
-
 
     }
 

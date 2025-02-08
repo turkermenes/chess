@@ -108,8 +108,6 @@ public class Rook extends JButton {
             } else break;
         }
 
-
-        System.out.println(result);
         return result;
     }
 

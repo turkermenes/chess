@@ -9,12 +9,15 @@ import java.awt.*;
 import java.util.ArrayList;
 import java.util.Objects;
 
+import static com.devenes.chess.core.Core.selectedPiece;
+
 public class Pawn extends JButton {
     //en passant, promote
 
     public String color;
     public int x, y, row, column;
     public boolean firstMove = true;
+    public boolean playedTwoSquare = false;
     public Core core;
 
     public Pawn(Core core, String color, int x, int y) {
@@ -77,9 +80,6 @@ public class Pawn extends JButton {
                 }
             }
 
-            //en passant -> last move gibi bir değişken hangi taş ve konum bilgisi. eğer karşı renk piyonsa ve uygun kareler müsaitse.
-
-
         } else {
             // two step move
             if (firstMove) {
@@ -110,13 +110,53 @@ public class Pawn extends JButton {
                 }
             }
         }
+        //en passant
+        if (Core.lastPlayedPiece instanceof Pawn pawn) {
+            if (pawn.playedTwoSquare) {
+                if (pawn.row == row && Math.abs(column - pawn.column) == 1 && Core.board[pawn.row - 1][pawn.column] == 0) {
+                    int r = color.equals("white") ? row - 1 : row + 1;
+                    String s = (r) + "," + (pawn.column);
+                    result.add(s);
+                }
+            }
+        }
         return result;
+    }
+
+
+    public void enPassant() {
+        //x,y,setLocation,row, column
+        for (Object o : Core.pieces) {
+            if (o instanceof Pawn pawn && !pawn.color.equals(color) && pawn.playedTwoSquare && Core.lastPlayedPiece == pawn) {
+                Core.board[pawn.row][pawn.column] = 0;
+                Core.pieces.remove(pawn);
+                int lastRow = color.equals("white") ? row - 1 : row + 1;
+                x = Converter.columnToX(pawn.column);
+                y = Converter.rowToY(lastRow);
+                setLocation(x, y);
+                row = lastRow;
+                column = pawn.column;
+                Core.board[row][column] = color.equals("white") ? 6 : 12;
+                setContentAreaFilled(false);
+                firstMove = false;
+                Core.lastPlayedPiece = selectedPiece;
+                Core.selectedPiece = null;
+                Core.targetSquare = null;
+                Core.targetPiece = null;
+                Core.possibleMoves = null;
+                Core.turn = Core.turn == 1 ? 2 : 1;
+
+                if (core != null)
+                    core.updateBoard();
+                break;
+            }
+        }
+
     }
 
 //    public void promote() {
 //
 //    }
-
 
     public String toString() {
         return getClass().getSimpleName() + "-" + color + "-" + Converter.rowColumnToSquare(row, column);

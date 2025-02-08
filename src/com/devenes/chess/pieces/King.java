@@ -170,6 +170,33 @@ public class King extends JButton {
         return result;
     }
 
+    public void shortCastle() {
+        //buraya makeMove metodundaki kodun devamı da eklenebilir
+        for (Object o : Core.pieces) {
+            if (o instanceof Rook rook && rook.color.equals(color) && rook.row == row && rook.column == column + 3) {
+                //x, y, setLocation, row, column değiş
+                rook.x = Converter.columnToX(column + 1);
+                rook.setLocation(rook.x, rook.y);
+                rook.column = column + 1;
+                rook.played = true;
+                break;
+            }
+        }
+    }
+
+    public void longCastle() {
+        //buraya makeMove metodundaki kodun devamı da eklenebilir
+        for (Object o : Core.pieces) {
+            if (o instanceof Rook rook && rook.color.equals(color) && rook.row == row && rook.column == column - 4) {
+                rook.x = Converter.columnToX(column - 1);
+                rook.setLocation(rook.x, rook.y);
+                rook.column = column - 1;
+                rook.played = true;
+                break;
+            }
+        }
+    }
+
     public String toString() {
         return getClass().getSimpleName() + "-" + color + "-" + Converter.rowColumnToSquare(row, column);
     }

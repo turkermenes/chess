@@ -57,6 +57,7 @@ public class Converter {
         };
     }
 
+    //en passant da kullanırsın belki reiz
     public static int[] squareToRowAndColumn(String square) {
         int[] result = new int[2];
         result[0] = Integer.parseInt(String.valueOf(square.charAt(1))) - 1;

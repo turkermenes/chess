@@ -12,7 +12,7 @@ public class Core {
 public static ArrayList<String[]> moves = new ArrayList<>();
     public static ArrayList<Object> pieces = new ArrayList<>();
     public static ArrayList<String> possibleMoves = new ArrayList<>();
-    public static Object selectedPiece, targetPiece;
+    public static Object selectedPiece, targetPiece, lastPlayedPiece;
     public static int[][] board = new int[8][8];
     public static String targetSquare;
     public static int size = 120, turn = 1;

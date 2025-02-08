@@ -77,14 +77,23 @@ public class PieceActionListener implements ActionListener {
 
             // x ve y'nin yerleri niye ters?
             String targetSquare = Converter.xToColumn(targetY) + "," + Converter.yToRow(targetX);
-            System.out.println(targetSquare);
             if (Core.possibleMoves.contains(targetSquare)) {
-                System.out.println(possibleMoves);
                 try {
                     new Game().makeMove();
                 } catch (Exception ex) {
                     throw new RuntimeException(ex);
                 }
+            } else {
+                try {
+                    selectedPiece.getClass().getMethod("setContentAreaFilled", boolean.class).invoke(selectedPiece, false);
+                } catch (Exception ex) {
+                    throw new RuntimeException(ex);
+                }
+
+                Core.selectedPiece = null;
+                Core.targetSquare = null;
+                Core.targetPiece = null;
+                Core.possibleMoves = null;
             }
         }
 
