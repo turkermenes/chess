@@ -14,7 +14,7 @@ public class Frame extends JFrame {
     //core'u silme yapılandırıcı metodu çalışıyor :)
     Core core = new Core(this, gameBoard);
 
-    public Frame() {
+    public Frame() throws NoSuchFieldException, IllegalAccessException {
         super("Chess");
         setSize(frameWidth, frameHeight);
         getContentPane().setBackground(Color.darkGray);

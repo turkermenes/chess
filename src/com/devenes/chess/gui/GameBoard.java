@@ -1,15 +1,13 @@
 package com.devenes.chess.gui;
 
-import com.devenes.chess.core.Core;
 import com.devenes.chess.listeners.MouseListener;
 
 import javax.swing.*;
 import java.awt.*;
 
-import static com.devenes.chess.core.Core.*;
+import static com.devenes.chess.core.Core.size;
 
 public class GameBoard extends JPanel {
-
     public GameBoard() {
 
         setSize(size * 8, size * 8);
@@ -46,9 +44,5 @@ public class GameBoard extends JPanel {
             y += size;
         }
     }
-
-//    private void drawPossibleMoves(Graphics g) {
-//
-//    }
 
 }

@@ -9,17 +9,17 @@ import java.util.ArrayList;
 public class Core {
 
 //    boolean showPossibleMoves = false;
-public static ArrayList<String[]> moves = new ArrayList<>();
+//public static ArrayList<String[]> moves = new ArrayList<>();
     public static ArrayList<Object> pieces = new ArrayList<>();
     public static ArrayList<String> possibleMoves = new ArrayList<>();
     public static Object selectedPiece, targetPiece, lastPlayedPiece;
     public static int[][] board = new int[8][8];
     public static String targetSquare;
     public static int size = 120, turn = 1;
-    JFrame frame;
-    JPanel gamePanel;
+    public JFrame frame;
+    public JPanel gamePanel;
 
-    public Core(JFrame frame, JPanel panel) {
+    public Core(JFrame frame, JPanel panel) throws NoSuchFieldException, IllegalAccessException {
         this.frame = frame;
         gamePanel = panel;
         setDefaultPosition();

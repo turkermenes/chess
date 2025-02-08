@@ -2,13 +2,16 @@ package com.devenes.chess.pieces;
 
 import com.devenes.chess.Converter;
 import com.devenes.chess.core.Core;
+import com.devenes.chess.gui.Components;
 import com.devenes.chess.listeners.PieceActionListener;
 
 import javax.swing.*;
 import java.awt.*;
+import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.Objects;
 
+import static com.devenes.chess.core.Core.lastPlayedPiece;
 import static com.devenes.chess.core.Core.selectedPiece;
 
 public class Pawn extends JButton {
@@ -19,6 +22,7 @@ public class Pawn extends JButton {
     public boolean firstMove = true;
     public boolean playedTwoSquare = false;
     public Core core;
+    public String promoteTo = null;
 
     public Pawn(Core core, String color, int x, int y) {
         this.color = color;
@@ -154,9 +158,66 @@ public class Pawn extends JButton {
 
     }
 
-//    public void promote() {
-//
-//    }
+    public void promote() throws NoSuchFieldException, IllegalAccessException, NoSuchMethodException, InvocationTargetException {
+        if (promoteTo != null) {
+            Core.pieces.remove(this);
+            if (Core.targetPiece != null) Core.pieces.remove(Core.targetPiece);
+            Core.board[row][column] = 0;
+            int r = color.equals("white") ? row - 1 : row + 1;
+            int col = Core.targetPiece == null ? column : (Integer) Core.targetPiece.getClass().getField("column").get(Core.targetPiece);
+
+            switch (promoteTo) {
+                //lastplayedpiece pawn mı olmalı yoksa terfi edilen taş mı??
+                case "queen":
+                    Queen queen = new Queen(core, color, Converter.columnToX(col), Converter.rowToY(r));
+                    lastPlayedPiece = queen;
+                    queen.column = col;
+                    queen.row = r;
+                    Core.pieces.add(queen);
+                    Core.board[queen.row][queen.column] = color.equals("white") ? 2 : 8;
+                    break;
+                case "knight":
+                    Knight knight = new Knight(core, color, Converter.columnToX(col), Converter.rowToY(r));
+                    knight.column = col;
+                    knight.row = r;
+                    lastPlayedPiece = knight;
+                    Core.pieces.add(knight);
+                    Core.board[knight.row][knight.column] = color.equals("white") ? 4 : 10;
+                    break;
+                case "rook":
+                    Rook rook = new Rook(core, color, Converter.columnToX(col), Converter.rowToY(r));
+                    rook.column = col;
+                    rook.row = r;
+                    lastPlayedPiece = rook;
+                    Core.pieces.add(rook);
+                    Core.board[rook.row][rook.column] = color.equals("white") ? 3 : 9;
+                    break;
+                case "bishop":
+                    Bishop bishop = new Bishop(core, color, Converter.columnToX(col), Converter.rowToY(r));
+                    bishop.column = col;
+                    bishop.row = r;
+                    lastPlayedPiece = bishop;
+                    Core.pieces.add(bishop);
+                    Core.board[bishop.row][bishop.column] = color.equals("white") ? 5 : 11;
+
+            }
+            for (Object p : Core.pieces) {
+                int targetRow = (Integer) p.getClass().getField("row").get(p);
+                int targetColumn = (Integer) p.getClass().getField("column").get(p);
+                if (targetColumn == col && Math.abs(targetRow - r) <= 3) {
+                    p.getClass().getMethod("setVisible", boolean.class).invoke(p, true);
+                }
+            }
+
+        }
+        Core.selectedPiece = null;
+        Core.targetSquare = null;
+        Core.targetPiece = null;
+        Core.possibleMoves = null;
+        Core.turn = Core.turn == 1 ? 2 : 1;
+        if (core != null)
+            core.updateBoard();
+    }
 
     public String toString() {
         return getClass().getSimpleName() + "-" + color + "-" + Converter.rowColumnToSquare(row, column);

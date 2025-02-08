@@ -10,7 +10,11 @@ public class Main {
         SwingUtilities.invokeLater(new Runnable() {
             @Override
             public void run() {
-                new Frame().setVisible(true);
+                try {
+                    new Frame().setVisible(true);
+                } catch (Exception e) {
+                    throw new RuntimeException(e);
+                }
             }
         });
     }

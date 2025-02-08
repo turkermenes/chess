@@ -2,12 +2,13 @@ package com.devenes.chess.core;
 
 
 import com.devenes.chess.Converter;
+import com.devenes.chess.gui.Components;
 import com.devenes.chess.pieces.*;
 
 import java.lang.reflect.InvocationTargetException;
 import java.util.Map;
 
-import static com.devenes.chess.core.Core.selectedPiece;
+import static com.devenes.chess.core.Core.*;
 
 public class Game {
 
@@ -51,6 +52,14 @@ public class Game {
                     return;
                 }
 
+                //check promotion
+                if (Integer.parseInt(split[0]) == 0 || Integer.parseInt(split[0]) == 7) {
+                    pawn.setVisible(false);
+                    pawn.core.gamePanel.add(new Components().promotePanel());
+                    pawn.core.gamePanel.repaint();
+                    pawn.core.gamePanel.revalidate();
+                    return;
+                }
 
             }
 
@@ -77,9 +86,27 @@ public class Game {
             int targetColumn = (int) targetP.getClass().getField("column").get(targetP);
             Core.pieces.remove(targetP);
 
+
+
             Object selectedP = Core.selectedPiece;
             int selectedPieceRow = (int) selectedP.getClass().getField("row").get(selectedP);
             int selectedPieceColumn = (int) selectedP.getClass().getField("column").get(selectedP);
+
+            //check promotion
+            //this should be fixed
+            if (selectedP instanceof Pawn pawn )  {
+                if (targetRow == 0 || targetRow == 7) {
+                    pawn.core.gamePanel.repaint();
+                    pawn.core.gamePanel.revalidate();
+                    pawn.setVisible(false);
+                    targetPiece.getClass().getMethod("setVisible", boolean.class).invoke(targetPiece, false);
+                    pawn.core.gamePanel.add(new Components().promotePanel());
+                    pawn.core.gamePanel.repaint();
+                    pawn.core.gamePanel.revalidate();
+                    return;
+                }
+            }
+
             Core.board[selectedPieceRow][selectedPieceColumn] = 0;
             selectedP.getClass().getField("x").set(selectedP, targetX);
             selectedP.getClass().getField("y").set(selectedP, targetY);
@@ -87,9 +114,12 @@ public class Game {
             selectedP.getClass().getField("column").set(selectedP, targetColumn);
             selectedP.getClass().getMethod("setLocation", int.class, int.class).invoke(selectedP, targetX, targetY);
 
+
             int baseValue = pieceValues.getOrDefault(selectedP.getClass(), 0);
             String color = (String) selectedP.getClass().getField("color").get(selectedP);
             Core.board[targetRow][targetColumn] = color.equals("white") ? baseValue : baseValue + 6;
+
+
 
 
         } else return;

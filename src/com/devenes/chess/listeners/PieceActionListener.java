@@ -7,10 +7,10 @@ import com.devenes.chess.core.Game;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 
-import static com.devenes.chess.core.Core.*;
+import static com.devenes.chess.core.Core.selectedPiece;
+import static com.devenes.chess.core.Core.targetPiece;
 
 public class PieceActionListener implements ActionListener {
 
